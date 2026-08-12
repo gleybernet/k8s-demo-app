@@ -6,7 +6,7 @@ $appName = getenv('APP_NAME') ?: 'Demo App do CDTI';
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($appName) ?></title>
+    <title><?= htmlspecialchars($appName) ?> - Estudos CI/CD</title>
     <style>
         body {
             font-family: system-ui, sans-serif;
