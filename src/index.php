@@ -1,6 +1,6 @@
 <?php
 $version = getenv('APP_VERSION') ?: '0.0.0';
-$appName = getenv('APP_NAME') ?: 'Demo App do Grupo';
+$appName = getenv('APP_NAME') ?: 'Demo App do CDTI';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
