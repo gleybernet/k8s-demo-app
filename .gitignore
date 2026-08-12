@@ -1,0 +1,53 @@
+# =========================
+# Sistema operacional
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# =========================
+# Editores / IDEs
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =========================
+# PHP
+# =========================
+/vendor/
+composer.phar
+composer.lock
+.phpunit.result.cache
+.php-cs-fixer.cache
+
+# =========================
+# Ambiente e segredos
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs e temporários
+# =========================
+*.log
+logs/
+tmp/
+temp/
+cache/
+
+# =========================
+# Docker (opcional)
+# =========================
+# descomente se não quiser versionar arquivos locais do Docker
+# docker-compose.override.yml
+
+# =========================
+# Kubernetes (opcional)
+# =========================
+# se no futuro tiverem arquivos locais de secrets
+*.secret.yaml
+secrets/
