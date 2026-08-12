@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: demo-app
-        image: gleybernet/demo-app:1.0.0
+        image: ghcr.io/gleybernet/demo-app:1.0.0
         ports:
         - containerPort: 80
         env:
