@@ -29,7 +29,7 @@ $appName = getenv('APP_NAME') ?: 'Demo App';
         .version {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #38bdf8;
+            color: #4ade80;
             margin-top: 1rem;
         }
         .label { color: #94a3b8; font-size: 0.9rem; }
