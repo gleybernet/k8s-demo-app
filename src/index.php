@@ -14,7 +14,7 @@ $appName = getenv('APP_NAME') ?: 'Demo App do CDTI v3';
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #054bef;
+            background: #0f172a;
             color: #e2e8f0;
             margin: 0;
         }
@@ -29,7 +29,7 @@ $appName = getenv('APP_NAME') ?: 'Demo App do CDTI v3';
         .version {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #080808;
+            color: #38bdf8;
             margin-top: 1rem;
         }
         .label { color: #032d67; font-size: 0.9rem; }
