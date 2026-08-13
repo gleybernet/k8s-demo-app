@@ -21,8 +21,39 @@ jobs:
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
+      - name: Validar manifests Kubernetes
+        run: |
+          echo "Validando arquivos em k8s/"
+          python3 - <<'PY'
+          import sys, glob
+          try:
+              import yaml
+          except ImportError:
+              import subprocess
+              subprocess.check_call([sys.executable, "-m", "pip", "install", "pyyaml"])
+              import yaml
 
-      - name: Ler versão do arquivo VERSION
+          files = glob.glob("k8s/*.yaml") + glob.glob("k8s/*.yml")
+          if not files:
+              print("Nenhum manifest encontrado em k8s/")
+              sys.exit(1)
+
+          for f in files:
+              print(f"Checando {f}...")
+              with open(f, "r", encoding="utf-8") as fh:
+                  docs = list(yaml.safe_load_all(fh))
+              for i, doc in enumerate(docs, 1):
+                  if not doc:
+                      print(f"Documento vazio em {f} #{i}")
+                      sys.exit(1)
+                  for key in ("apiVersion", "kind"):
+                      if key not in doc:
+                          print(f"Faltando '{key}' em {f} (doc #{i})")
+                          sys.exit(1)
+                  print(f"  OK: {doc.get('kind')} / {doc.get('metadata', {}).get('name', 'sem-nome')}")
+          print("Manifests válidos.")
+          PY      
+        - name: Ler versão do arquivo VERSION
         id: version
         run: |
           VERSION=$(cat VERSION | tr -d '[:space:]')
