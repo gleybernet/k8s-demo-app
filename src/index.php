@@ -1,6 +1,6 @@
 <?php
 $version = getenv('APP_VERSION') ?: '0.0.0';
-$appName = getenv('APP_NAME') ?: 'Demo App do CDTI v2';
+$appName = getenv('APP_NAME') ?: 'Demo App do CDTI v3';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -14,7 +14,7 @@ $appName = getenv('APP_NAME') ?: 'Demo App do CDTI v2';
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #0f172a;
+            background: #054bef;
             color: #e2e8f0;
             margin: 0;
         }
@@ -29,7 +29,7 @@ $appName = getenv('APP_NAME') ?: 'Demo App do CDTI v2';
         .version {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #4ade80;
+            color: #080808;
             margin-top: 1rem;
         }
         .label { color: #94a3b8; font-size: 0.9rem; }
