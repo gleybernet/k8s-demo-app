@@ -21,6 +21,14 @@ jobs:
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
+
+      - name: Ler versão do arquivo VERSION
+        id: version
+        run: |
+          VERSION=$(cat VERSION | tr -d '[:space:]')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Versão detectada: $VERSION"
+
       - name: Validar manifests Kubernetes
         run: |
           echo "Validando arquivos em k8s/"
@@ -52,13 +60,7 @@ jobs:
                           sys.exit(1)
                   print(f"  OK: {doc.get('kind')} / {doc.get('metadata', {}).get('name', 'sem-nome')}")
           print("Manifests válidos.")
-          PY      
-        - name: Ler versão do arquivo VERSION
-        id: version
-        run: |
-          VERSION=$(cat VERSION | tr -d '[:space:]')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Versão detectada: $VERSION"
+          PY
 
       - name: Definir tag da imagem
         run: |
