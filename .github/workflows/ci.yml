@@ -41,7 +41,7 @@ jobs:
           docker images | grep demo-app
 
       - name: Scan da imagem com Trivy
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: ${{ env.IMAGE_TAG }}
           format: 'table'
