@@ -1,4 +1,4 @@
-name: CI - Build and Push Demo App v2
+name: CI - Build, Scan and Push Demo App
 
 on:
   push:
@@ -11,11 +11,12 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  build-and-push:
+  build-scan-push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+      security-events: write
 
     steps:
       - name: Checkout do código
@@ -28,6 +29,27 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Versão detectada: $VERSION"
 
+      - name: Definir tag da imagem
+        run: |
+          IMAGE_TAG="${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}"
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "Tag da imagem: $IMAGE_TAG"
+
+      - name: Build da imagem Docker
+        run: |
+          docker build -t "$IMAGE_TAG" .
+          docker images | grep demo-app
+
+      - name: Scan da imagem com Trivy
+        uses: aquasecurity/trivy-action@0.35.0
+        with:
+          image-ref: ${{ env.IMAGE_TAG }}
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
       - name: Login no GitHub Container Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
@@ -35,13 +57,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build da imagem Docker
-        run: |
-          IMAGE_TAG="${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}"
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
-          docker build -t "$IMAGE_TAG" .
-          docker images | grep demo-app
 
       - name: Push da imagem
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
